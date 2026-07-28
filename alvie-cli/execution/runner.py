@@ -56,8 +56,8 @@ class AlvieExecution:
 
     @property
     def exe(self) -> str:
-        """Absolute path to the ALVIE executable to invoke."""
-        return f"{self.alvie_path}/_build/default/bin/{self.executable}"
+        """Path to the ALVIE executable to invoke."""
+        return f"bin/{self.executable}"
 
     @property
     def args_string(self) -> list[str]:
@@ -72,7 +72,7 @@ class AlvieExecution:
     @property
     def command(self) -> list[str]:
         """Full command line passed to the subprocess."""
-        return [self.exe, *self.args_string]
+        return ["dune", "exec", "--display=quiet", self.exe, "--", *self.args_string]
 
 
     def run(self) -> None:
@@ -185,14 +185,14 @@ class AlvieExecution:
     def _print_header(self) -> None:
         print()
         info(f"Running {style(self.executable, CYAN, BOLD)}")
-        hint(f"  {self.exe}\n")
+        hint(f"  dune exec {self.exe} --\n")
         if self.args:
             info("Arguments:")
             for arg in self.args:
                 if arg.value:
-                    print(f"\t{style(arg.flag, CYAN)}: {arg.value}")
+                    print(f"  {style(arg.flag, CYAN)}: {arg.value}")
                 else:
-                    print(f"\t{style(arg.flag, CYAN)}")
+                    print(f"  {style(arg.flag, CYAN)}")
         else:
             hint("  (no arguments)")
         hint("\nPress Ctrl+C to stop the execution.")

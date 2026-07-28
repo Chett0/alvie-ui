@@ -12,7 +12,7 @@ from prompt_toolkit.validation import ValidationError
 
 from .entities_flow import build_choices
 from models.commands import Command, Argument, ConfigCommand
-from config.paths import get_alvie_code_path, validate_save_path
+from config.paths import get_alvie_code_path, get_alvie_cli_path, validate_save_path
 from config.loaders import load_args, load_commands
 from execution.runner import AlvieExecution, DEBUG_PARSED_OUTPUT_ERROR
 from tui.validators import FileExtensionValidator
@@ -29,6 +29,7 @@ from tui.flow import (
 
 
 ALVIE_PATH = get_alvie_code_path()
+ALVIE_CLI_PATH = get_alvie_cli_path()
 commands_map : dict[str, Command] = {}
 
 
@@ -176,7 +177,7 @@ def select_config(state: CommandState) -> StepOutput:
     file = create_prompt(
             FilePathPrompt,
             message="Select the configuration file for the command:",
-            default="/home/alvie/alvie-cli/presets/config.json",
+            default=f"{ALVIE_CLI_PATH}/presets/config.json",
             validate=FileExtensionValidator.json_file_validator(must_exists=True),
         ).execute()
 
@@ -244,7 +245,7 @@ def select_json_output_path(state: CommandState) -> StepOutput:
 
     parsed_output_path : Path | None = validate_save_path(
         message="Where do you want to save parsed output JSON?",
-        default_path="/home/alvie/alvie-cli/parsed-output/parsed_output.json",
+        default_path=f"{ALVIE_CLI_PATH}/parsed-output/parsed_output.json",
         validator=FileExtensionValidator.json_file_validator()
     )
 

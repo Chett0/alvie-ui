@@ -23,7 +23,7 @@ services:
     stdin_open: true
     tty: true
     # activate venv
-    command: /bin/bash --rcfile /home/alvie/venv/bin/activate
+    command: /bin/bash --rcfile /home/alvie/.bashrc_alvie
   viewer:
     build:
       context: .

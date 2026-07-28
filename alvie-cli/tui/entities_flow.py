@@ -21,7 +21,7 @@ from models.instructions import (
     Instruction, 
     BaseChoice
 )
-from config.paths import validate_save_path
+from config.paths import validate_save_path, get_alvie_cli_path
 from tui.choices import (
     BACK_CHOICE, 
     DONE_CHOICE, 
@@ -33,6 +33,8 @@ from tui.choices import (
     is_show
 )
 from config.loaders import load_combinators, load_instructions
+
+ALVIE_CLI_PATH = get_alvie_cli_path() # enclaves/attackers default paths from alvie-cli-path
 
 def print_entity(
         entity: str, 
@@ -405,10 +407,9 @@ def build_enclave() -> None:
         return
     enclave_text : str = render_section(body, title="enclave")
 
-    WORKING_PATH = os.environ["WORKING_PATH"]
     output_path : Path | None = save_entity(
         text=enclave_text,
-        default=f"{WORKING_PATH}/enclaves/victim.etdl",
+        default=f"{ALVIE_CLI_PATH}/enclaves/victim.etdl",
         file_extension_validator=FileExtensionValidator.enclave_file_validator()
     )
 
@@ -441,7 +442,7 @@ def build_attacker() -> None:
     WORKING_PATH = os.environ["WORKING_PATH"]
     output_path : Path | None = save_entity(
         text=attacker_text,
-        default=f"{WORKING_PATH}/attackers/attacker.atdl",
+        default=f"{ALVIE_CLI_PATH}/attackers/attacker.atdl",
         file_extension_validator=FileExtensionValidator.attacker_file_validator()
     )
 

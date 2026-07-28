@@ -23,7 +23,15 @@ def get_alvie_code_path() -> Path:
 
     return Path(alvie_code_path).expanduser().resolve()
 
-
+def get_alvie_cli_path() -> Path:
+    alvie_cli_path = os.environ["ALVIE_CLI_PATH"]
+    
+    if not alvie_cli_path:
+        raise EnvironmentError(
+            "ALVIE_CLI_PATH environment variable is not set. Please set it to the path of the Alvie CLI."
+        )
+        
+    return Path(alvie_cli_path).expanduser().resolve()
     
 def validate_save_path(
     message: str,

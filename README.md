@@ -17,7 +17,7 @@ It provides a user-friendly interface (CLI and web) that simplifies the interact
 #### Before
 
 ```bash
-$ /path/to/alvie/code/_build/default/bin/learn.exe \
+$ dune exec bin/learn.exe -- \
   --att-spec /path/to/attacker.atdl \
   --encl-spec /path/to/enclave.etdl \
   --oracle randomwalk \

@@ -31,16 +31,16 @@ class ParsedOutput:
         
         lines = [
             "Recap\n",
-            f"\tHypotheses: {self.hypotheses_count}",
-            f"\tRuns: {self.runs_count}",
-            f"\tSteps: {self.steps_count}",
-            "\n\tOutputs:",
+            f"  - Hypotheses: {self.hypotheses_count}",
+            f"  - Runs: {self.runs_count}",
+            f"  - Steps: {self.steps_count}",
+            "\n  - Outputs:",
         ]
         
         # show only output symbols with non-zero occurrences
         for symbol, data in parser.output_symbols.items():
             if self.output_counts[symbol] > 0:
-                lines.append(f"\t- {data['name']} ({symbol}): {self.output_counts[symbol]}")
+                lines.append(f"    - {data['name']} ({symbol}): {self.output_counts[symbol]}")
         return "\n".join(lines) + "\n"
 
 
