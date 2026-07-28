@@ -24,17 +24,31 @@ const stepMatchesFilters = (
   { inputs = [], outputs = [] }: Run[number],
   filters: FilterValues,
 ) => {
-  const stepInputSymbols = inputs.map(({ symbol }) => symbol)
-  const stepActors = [
-    ...inputs.map(({ actor }) => actor),
-    ...outputs.map((symbol) => symbolCatalog.outputs[symbol]?.actor),
-  ].filter(Boolean)
+  const matchesActor = (actor?: string) =>
+    filters.actors.length === 0 || Boolean(actor && filters.actors.includes(actor))
 
-  return (
-    matchesFilter(filters.actors, stepActors) &&
-    matchesFilter(filters.inputs, stepInputSymbols) &&
-    matchesFilter(filters.outputs, outputs)
+  const matchesInput = inputs.some(
+    ({ actor, symbol }) =>
+      matchesActor(actor) &&
+      matchesFilter(filters.inputs, [symbol]),
   )
+
+  const matchesOutput = outputs.some((symbol) => {
+    const outputActor = symbolCatalog.outputs[symbol]?.actor
+
+    return matchesActor(outputActor) && matchesFilter(filters.outputs, [symbol])
+  })
+
+  const hasInputFilters = filters.inputs.length > 0
+  const hasOutputFilters = filters.outputs.length > 0
+
+  if (hasInputFilters && !matchesInput) return false
+  if (hasOutputFilters && !matchesOutput) return false
+  if (!hasInputFilters && !hasOutputFilters && filters.actors.length > 0) {
+    return matchesInput || matchesOutput
+  }
+
+  return true
 }
 
 const runMatchesFilters = (run: IndexedRun, filters: FilterValues) =>

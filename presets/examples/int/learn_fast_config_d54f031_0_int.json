@@ -1,0 +1,46 @@
+{
+  "name": "Learn",
+  "executable": "bin/learn.exe",
+  "args": [
+    {
+      "flag": "--att-spec",
+      "value": "/home/alvie/spec-lib/fast/b6.atdl"
+    },
+    {
+      "flag": "--encl-spec",
+      "value": "/home/alvie/spec-lib/fast/enclave-complete.etdl"
+    },
+    {
+      "flag": "--oracle",
+      "value": "pac"
+    },
+    {
+      "flag": "--tmpdir",
+      "value": "/tmp/alvie-b6"
+    },
+    {
+      "flag": "--res",
+      "value": "/home/alvie/results/b6-sim/d54f031-b6-enclave-complete-0-0.01-0.01-int.dot"
+    },
+    {
+      "flag": "--sancus",
+      "value": "/home/alvie/sancus-core-gap"
+    },
+    {
+      "flag": "--commit",
+      "value": "d54f031"
+    },
+    {
+      "flag": "--secret",
+      "value": "0"
+    },
+    {
+      "flag": "--epsilon",
+      "value": "0.01"
+    },
+    {
+      "flag": "--delta",
+      "value": "0.01"
+    }
+  ]
+}

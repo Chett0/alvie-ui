@@ -136,7 +136,7 @@
     },
     "--ignore-interrupts": {
         "type": "boolean",
-        "description": "Collapse interrupt outputs",
+        "description": "Ignore interrupts",
         "required": false
     },
     "--sancus-master-key": {

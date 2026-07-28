@@ -275,6 +275,48 @@ python alvie-cli presets/*.json --njobs 4
 
 <br>
 
+### Complete example
+
+The following section, follows the steps provided in the *fast example* that can be found at: [ALVIE-getting-started](https://github.com/unive-alvie/alvie/blob/documentation/docs/getting-started.md#5-try-one-attack)
+
+1. Learn 12 mealy machine models, 6 with interrupts and 6 with ignoring interrupts.
+
+```bash
+./learn_one.sh d54f031 b6 fast
+```
+
+Translated to ALVIE-CLI commands, this is equivalent to:
+
+```bash
+python alvie-cli \
+  presets/examples/int/learn_fast_config_ef753b6_0_int.json \
+  presets/examples/int/learn_fast_config_ef753b6_1_int.json \
+  presets/examples/int/learn_fast_config_d54f031_0_int.json \
+  presets/examples/int/learn_fast_config_d54f031_1_int.json \
+  presets/examples/int/learn_fast_config_bf89c0b_0_int.json \
+  presets/examples/int/learn_fast_config_bf89c0b_1_int.json \
+  presets/examples/nint/learn_fast_config_ef753b6_0_nint.json \
+  -i \
+  -n fast_ef753b6_0_int fast_ef753b6_1_int fast_d54f031_0_int fast_d54f031_1_int fast_bf89c0b_0_int fast_bf89c0b_1_int \
+     fast_ef753b6_0_nint fast_ef753b6_1_nint fast_d54f031_0_nint fast_d54f031_1_nint fast_bf89c0b_0_nint fast_bf89c0b_1_nint \
+  --njobs 6
+```
+
+```bash
+python alvie-cli \
+  presets/examples/nint/learn_fast_config_ef753b6_0_nint.json \
+  presets/examples/nint/learn_fast_config_ef753b6_1_nint.json \
+  presets/examples/nint/learn_fast_config_d54f031_0_nint.json \
+  presets/examples/nint/learn_fast_config_d54f031_1_nint.json \
+  presets/examples/nint/learn_fast_config_bf89c0b_0_nint.json \
+  presets/examples/nint/learn_fast_config_bf89c0b_1_nint.json \
+  -i \
+  -n fast_ef753b6_0_nint fast_ef753b6_1_nint fast_d54f031_0_nint fast_d54f031_1_nint fast_bf89c0b_0_nint fast_bf89c0b_1_nint \
+  --njobs 6
+```
+
+
+
 ### ALVIE-VIEWER
 
 Documentation at [ALVIE Viewer](./alvie-viewer)

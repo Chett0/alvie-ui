@@ -61,7 +61,7 @@ def create_output(
         executable=payload.data.executable,
         start=payload.data.start,
         end=payload.data.end,
-        data=payload.data.model_dump(mode="json"),
+        data=payload.data.model_dump(mode="json", exclude_none=True), # exclude_none ensures that optional fields with None values are not stored in the database
     )
     db.add(record)
     db.commit()

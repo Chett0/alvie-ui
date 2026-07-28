@@ -16,7 +16,8 @@
             "--info",
             "--commit",
             "--epsilon",
-            "--delta"
+            "--delta",
+            "--ignore-interrupts"
         ]
     },
     {
