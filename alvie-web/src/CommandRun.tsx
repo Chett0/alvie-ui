@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 import type { CommandArgument } from './types'
 
 const RUN_DIRECTORY = '/home/alvie/alvie/code'
-const BIN_DIRECTORY = `${RUN_DIRECTORY}/_build/default/bin`
 
 // encode special chars for bash
 const quoteArgument = (value: string) =>
@@ -16,7 +15,7 @@ const buildCommand = (
   args: CommandArgument[] = [],
 ): string => {
   const commandParts = [
-    `${BIN_DIRECTORY}/${executable}`,
+    `dune exec ${executable} --`,
     ...args.map(({ flag, value }) =>
       value === undefined || value === null || value === ''
         ? flag

@@ -3,11 +3,17 @@ import type { ReactNode } from 'react'
 
 interface RunCardProps {
   index: number
+  stepCount: number
   defaultOpen?: boolean
   children: ReactNode
 }
 
-function RunCard({ index, defaultOpen = false, children }: RunCardProps) {
+function RunCard({
+  index,
+  stepCount,
+  defaultOpen = false,
+  children,
+}: RunCardProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen)
 
   return (
@@ -24,7 +30,12 @@ function RunCard({ index, defaultOpen = false, children }: RunCardProps) {
             onClick={() => setIsOpen((current) => !current)}
             aria-expanded={isOpen}
           >
-            Run {index + 1}
+            <span className="d-flex justify-content-between align-items-center w-100 me-3">
+              <span>Run {index + 1}</span>
+              <span className="text-secondary fw-normal">
+                {stepCount} {stepCount === 1 ? 'step' : 'steps'}
+              </span>
+            </span>
           </button>
         </h3>
 

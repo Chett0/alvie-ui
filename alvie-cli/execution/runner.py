@@ -57,8 +57,8 @@ class AlvieExecution:
     @property
     def exe(self) -> str:
         """Path to the ALVIE executable to invoke."""
-        return f"bin/{self.executable}"
-
+        return self.executable
+    
     @property
     def args_string(self) -> list[str]:
         """Arguments flattened into CLI tokens (``["--flag", "value", ...]``)."""
@@ -68,10 +68,18 @@ class AlvieExecution:
             if arg.value is not None:
                 tokens.append(arg.value)
         return tokens
+    
+    @property
+    def built_exe(self) -> str:
+        """Full path to the ALVIE executable to invoke."""
+        return f"_build/default/{self.executable}"
 
     @property
     def command(self) -> list[str]:
         """Full command line passed to the subprocess."""
+        if self.parallel:
+            return [self.built_exe, *self.args_string]
+        
         return ["dune", "exec", "--display=quiet", self.exe, "--", *self.args_string]
 
 
@@ -87,11 +95,19 @@ class AlvieExecution:
 
             if self.is_raw_output:
                 self._run_raw()
-            else:
+            # parse the output only for learn.exe
+            elif self.executable == "bin/learn.exe":
                 self._run_parsed()
+            # TODO: Manage other commands: fa, pbt, exec
+            else:
+                raise ValueError(f"Command {self.executable} not supported.")
 
             if self.interactive:
                 self._upload_parsed_output()
+                
+        except ValueError as exc:
+            self._stop_spinner()
+            error(f"Execution failed: {exc}\n")
 
         except KeyboardInterrupt:
             self._stop_spinner()
@@ -103,6 +119,8 @@ class AlvieExecution:
             self._stop_spinner()
             error(f"Alvie exited with a non-zero status ({exc.returncode}).\n")
 
+        else:
+            success("Alvie finished successfully.\n")
         finally:
             self._close_output_file()
 
@@ -113,15 +131,19 @@ class AlvieExecution:
         self._process = None
 
         self._spinner = Spinner("Executing ALVIE").start()
+        
         self.run()
-        success("Alvie finished successfully.\n")
+        
+        self._stop_spinner()
+            
 
 
     def _run_raw(self) -> None:
         """Run the ALVIE execution and stream its raw output to the terminal or file."""
         try:
-            self._process, stdout = self._get_alvie_process()
+            self._process, stdout, stderr = self._get_alvie_process()
             received_output = False
+            
             for line in stdout:
                 if not received_output:
                     self._stop_spinner()
@@ -131,16 +153,27 @@ class AlvieExecution:
             self._write("\n\n")
             self._process.wait()
             self._end_time = datetime.now()
+            
+            self._stop_spinner()
+            
+            if stderr:
+                err_text = stderr.read()
+                if err_text:
+                    error(err_text)
+                
 
             if self._process.returncode != 0:
                 raise subprocess.CalledProcessError(self._process.returncode, self.exe)
+            
+            self._write("\n\n")
+            
         finally:
             self._stop_spinner()
 
 
     def _run_parsed(self) -> None:
         """Run the ALVIE execution and parse its output."""
-        self._process, stdout = self._get_alvie_process()
+        self._process, stdout, stderr = self._get_alvie_process()
 
         symbols = load_output_symbols()
         input_symbols, output_symbols = symbols["inputs"], symbols["outputs"]
@@ -170,6 +203,11 @@ class AlvieExecution:
         self._stop_spinner()
         self._process.wait()
         self._end_time = datetime.now()
+        
+        if stderr:
+            err_text = stderr.read()
+            if err_text:
+                error(err_text)
 
         if self._process.returncode != 0:
             raise subprocess.CalledProcessError(self._process.returncode, self.exe)
@@ -185,7 +223,7 @@ class AlvieExecution:
     def _print_header(self) -> None:
         print()
         info(f"Running {style(self.executable, CYAN, BOLD)}")
-        hint(f"  dune exec {self.exe} --\n")
+        hint(f"  dune exec {self.exe}\n")
         if self.args:
             info("Arguments:")
             for arg in self.args:
@@ -312,7 +350,7 @@ class AlvieExecution:
     ) -> None:
         """Build the JSON-serializable parsed output document."""
         self.parsed_document = {
-            "executable": self.executable,
+            "executable": self.exe,
             "args": [
                 {"flag": arg.flag, "value": arg.value}
                 if arg.value is not None
@@ -322,10 +360,6 @@ class AlvieExecution:
             "start": self._start_time.isoformat() if self._start_time else None,
             "end": self._end_time.isoformat() if self._end_time else None,
             "recap": {
-                symbol: count
-                for symbol, count in output.output_counts.items()
-                if count > 0
-            } | {
                 "hypotheses": output.hypotheses_count,
                 "runs": output.runs_count,
                 "steps": output.steps_count
@@ -375,7 +409,7 @@ class AlvieExecution:
             self.command,
             cwd=self.alvie_path,
             stdout=subprocess.PIPE,
-            stderr=None,
+            stderr=subprocess.PIPE,
             text=True
         )
 
@@ -385,7 +419,7 @@ class AlvieExecution:
         if not process.stdout:
             raise RuntimeError("No output from Alvie process.")
         
-        return process, process.stdout
+        return process, process.stdout, process.stderr
 
 
     def _stop_spinner(self) -> None:

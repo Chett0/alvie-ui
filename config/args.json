@@ -17,20 +17,21 @@
     },
     "--oracle": {
         "type": "choice",
-        "description": "Oracle that must be used for equivalence check",
+        "description": "Oracle used for equivalence check",
         "values": ["randomwalk", "pac", "exhaustive"],
         "required": true
     },
     "--tmpdir": {
         "type": "directory",
-        "description": "Temporary directory where intermediate results/files will be stored",
+        "description": "Temporary directory for intermediate results",
         "validation": { "must_exists": false },
         "default": "/tmp/alvie",
-        "required": true
+        "required": true,
+        "prefilled": true
     },
     "--res": {
         "type": "filename",
-        "description": "File where the final learned model will be stored (.dot file)",
+        "description": "Path to save the learned model (.dot file)",
         "extension": ".dot",
         "validation": { "must_exists": false },
         "default": "/tmp/alvie/result.dot",
@@ -38,14 +39,15 @@
     },
     "--sancus": {
         "type": "directory",
-        "description": "Directory where the sancus-core-gap repository was cloned",
+        "description": "Path to the cloned sancus-core-gap repository",
         "validation": { "must_exists": true },
         "default": "/home/alvie/sancus-core-gap",
-        "required": true
+        "required": true,
+        "prefilled": true
     },
     "--secret": {
         "type": "int",
-        "description": "Provide a secret value. Required if the enclave specification contains a secret variable '?'.",
+        "description": "Secret value (required if enclave uses '?' secret vars)",
         "default": "0",
         "required": false
     },
@@ -65,10 +67,22 @@
         "description": "Enable info-level logging",
         "required": false
     },
+    "--epsilon": {
+        "type": "float",
+        "description": "PAC epsilon parameter",
+        "default": "0.001",
+        "required": false
+    },
+    "--delta": {
+        "type": "float",
+        "description": "PAC delta parameter",
+        "default": "0.001",
+        "required": false
+    },
     "--m1-int": {
         "type": "filename",
         "extension": ".dot",
-        "description": "Path to first Mealy machine model (.dot file) (interrupt variant)",
+        "description": "First Mealy machine model (.dot, interrupt variant)",
         "default": "/tmp/alvie/m1_int.dot",
         "validation": { "must_exists": true },
         "required": true
@@ -76,7 +90,7 @@
     "--m2-int": {
         "type": "filename",
         "extension": ".dot",
-        "description": "Path to second Mealy machine model (.dot file) (interrupt variant)",
+        "description": "Second Mealy machine model (.dot, interrupt variant)",
         "default": "/tmp/alvie/m2_int.dot",
         "validation": { "must_exists": true },
         "required": true
@@ -84,7 +98,7 @@
     "--m1-nint": {
         "type": "filename",
         "extension": ".dot",
-        "description": "Path to first Mealy machine model (.dot file) (non-interrupt variant)",
+        "description": "First Mealy machine model (.dot, non-interrupt variant)",
         "default": "/tmp/alvie/m1_nint.dot",
         "validation": { "must_exists": true },
         "required": true
@@ -92,7 +106,7 @@
     "--m2-nint": {
         "type": "filename",
         "extension": ".dot",
-        "description": "Path to second Mealy machine model (.dot file) (non-interrupt variant)",
+        "description": "Second Mealy machine model (.dot, non-interrupt variant)",
         "default": "/tmp/alvie/m2_nint.dot",
         "validation": { "must_exists": true },
         "required": true
@@ -112,7 +126,7 @@
     },
     "--sexp-input": {
         "type": "filename",
-        "description": "Symbolic expression representing the raw input for the simulator",
+        "description": "Symbolic expression for simulator raw input",
         "required": true
     },
     "--commit": {
@@ -133,7 +147,7 @@
     },
     "--att-spec1": {
         "type": "filename",
-        "description": "Path to first attacker specification for the first run (.atdl file)",
+        "description": "First attacker spec for 1st run (.atdl)",
         "extension": ".atdl",
         "validation": { "must_exists": true },
         "default": "/home/alvie/spec-lib/example/attacker.atdl",
@@ -141,7 +155,7 @@
     },
     "--att-spec2": {
         "type": "filename",
-        "description": "Path to second attacker specification for the second run (.atdl file)",
+        "description": "Second attacker spec for 2nd run (.atdl)",
         "extension": ".atdl",
         "validation": { "must_exists": true },
         "default": "/home/alvie/spec-lib/example/attacker.atdl",

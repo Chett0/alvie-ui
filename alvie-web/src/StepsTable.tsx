@@ -42,12 +42,10 @@ function StepsTable({ steps }: { steps: RunStep[] }) {
       <table className="table steps-table align-middle mb-0">
         <caption className="visually-hidden">Run steps</caption>
 
-        {/* Keep the transition arrow centered between the input and output areas. */}
         <colgroup>
           <col className="step-number-column" />
           <col className="input-actor-column" />
           <col className="input-action-column" />
-          <col className="transition-column" />
           <col className="output-action-column" />
         </colgroup>
 
@@ -56,10 +54,6 @@ function StepsTable({ steps }: { steps: RunStep[] }) {
             <th scope="col">#</th>
             <th scope="col">Input actor</th>
             <th scope="col">Input action</th>
-            <th scope="col" className="text-center">
-              <span className="visually-hidden">Produces</span>
-              <span aria-hidden="true">→</span>
-            </th>
             <th scope="col">Output action</th>
           </tr>
         </thead>
@@ -115,12 +109,6 @@ function StepsTable({ steps }: { steps: RunStep[] }) {
                         </div>
                       </td>
 
-                      <td
-                        className="text-center fs-4"
-                        rowSpan={outputRows.length}
-                      >
-                        <span aria-hidden="true">→</span>
-                      </td>
                     </>
                   )}
 

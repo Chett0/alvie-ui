@@ -188,9 +188,9 @@ header{
 
 .steps-table {
   min-width: 52rem;
+  table-layout: fixed;
 }
 
-/* The columns before and after the arrow occupy the same overall width. */
 .step-number-column {
   width: 4rem;
 }
@@ -200,15 +200,11 @@ header{
 }
 
 .input-action-column {
-  width: calc(50% - 15.5rem);
-}
-
-.transition-column {
-  width: 5rem;
+  width: 35%;
 }
 
 .output-action-column {
-  width: calc(50% - 2.5rem);
+  width: auto;
 }
 
 .step-stack {

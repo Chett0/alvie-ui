@@ -5,6 +5,8 @@ from InquirerPy.base.control import Choice
 from prompt_toolkit.document import Document
 from prompt_toolkit.validation import Validator, ValidationError
 
+import re
+
 from models.instructions import Operand
 
 class FileExtensionValidator(Validator):
@@ -74,6 +76,20 @@ class IntValidator(Validator):
                 cursor_position=document.cursor_position
             )
             
+class FloatValidator(Validator):
+
+    def __init__(self):
+        pass
+
+    def validate(self, document : Document) -> None:
+        try:
+            float(document.text)
+        except ValueError:
+            raise ValidationError(
+                message="Input must be a float",
+                cursor_position=document.cursor_position
+            )
+            
 class HexValidator(Validator):
     def __init__(self):
         pass
@@ -87,24 +103,17 @@ class HexValidator(Validator):
                 cursor_position=document.cursor_position
             )
 
-# Need support for abbreviated hashes?
+# Commit hash: hex string of length between 7 (short commit) and 40 (full commit)
 class HashValidator(Validator):
     def __init__(self):
         pass
 
     def validate(self, document: Document) -> None:
         text = document.text.strip()
-        try:
-            sha1 = bytes.fromhex(text)
-        except ValueError:
+        res = re.fullmatch(r"[0-9a-fA-F]{7,40}", text)
+        if not res:
             raise ValidationError(
-                message="Input must be a valid hexadecimal string",
-                cursor_position=document.cursor_position
-            )
-        
-        if len(sha1) != 20:
-            raise ValidationError(
-                message=f"SHA-1 hash must be exactly 40 characters long (got {len(text)})",
+                message="Input must be a valid hexadecimal string of length between 7 and 40 characters",
                 cursor_position=document.cursor_position
             )
 

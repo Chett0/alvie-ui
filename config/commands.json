@@ -2,7 +2,7 @@
     {
         "name": "Learn",
         "description": "Learn a Mealy machine model",
-        "executable": "learn.exe",
+        "executable": "bin/learn.exe",
         "args": [
             "--att-spec",
             "--encl-spec",
@@ -13,13 +13,16 @@
             "--secret",
             "--step-limit",
             "--debug",
-            "--info"
+            "--info",
+            "--commit",
+            "--epsilon",
+            "--delta"
         ]
     },
     {
         "name": "Flow-analysis",
         "description": "Find flow-analysis (NI) violations between two models",
-        "executable": "fa.exe",
+        "executable": "bin/fa.exe",
         "args": [
             "--m1-int",
             "--m2-int",
@@ -34,7 +37,7 @@
     {
         "name": "Execute",
         "description": "Runs the given raw input on the specified version of Sancus with the given SUL configuration",
-        "executable": "exec.exe",
+        "executable": "bin/exec.exe",
         "args": [
             "--att-spec",
             "--encl-spec",
@@ -52,7 +55,7 @@
     {
         "name": "Property-based testing",
         "description": "Random NI tests on the Sancus simulator without learning a model. Faster than Learn",
-        "executable": "pbt.exe",
+        "executable": "bin/pbt.exe",
         "args": [
             "--att-spec1",
             "--att-spec2",

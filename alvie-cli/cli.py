@@ -1,4 +1,4 @@
-import argparse
+import argparse, subprocess
 from dataclasses import dataclass, field
 from io import TextIOWrapper
 import uuid
@@ -79,6 +79,14 @@ def run_parallel(
     def run(merged : TextIOWrapper | None = None) -> None:
         """Run all executions in parallel, merging their outputs into `merged` as they complete."""
         with dashboard:
+            
+            # Build ALVIE executable before parallel running
+            subprocess.run(
+                ["dune", "build"],
+                cwd=executions[0].alvie_path,
+                check=True,
+            )
+            
             with ThreadPoolExecutor(max_workers=njobs) as executor:
                 futures = {
                     executor.submit(run_tracked, index, execution): execution
@@ -165,8 +173,8 @@ class CliArguments(argparse.Namespace):
             parser.error("--interactive cannot be used with --raw-output")
 
         # parallel execution requires at least one output file, terminal output is not supported
-        if self.njobs > 1 and not self.parsed_output and not self.output:
-            parser.error("--njobs > 1 requires --output or --parsed-output to be specified")
+        if self.njobs > 1 and not self.parsed_output and not self.output and not self.interactive:
+            parser.error("--njobs > 1 requires --output or --parsed-output or --interactive to be specified")
 
         if not self.configs:
             parser.error("No configuration files provided")

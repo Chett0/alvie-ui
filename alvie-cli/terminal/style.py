@@ -29,8 +29,8 @@ ACTORS : dict[str, str] = {
     "blue": "Attacker",
     "green": "Enclave",
     "yellow": "No actor",
-    "magenta": "Interrupt",
-    "red": "Reset",
+    "magenta": "Attacker",
+    "red": "No actor",
 }
 
 

@@ -34,13 +34,13 @@ class ParsedOutput:
             f"  - Hypotheses: {self.hypotheses_count}",
             f"  - Runs: {self.runs_count}",
             f"  - Steps: {self.steps_count}",
-            "\n  - Outputs:",
         ]
         
         # show only output symbols with non-zero occurrences
-        for symbol, data in parser.output_symbols.items():
-            if self.output_counts[symbol] > 0:
-                lines.append(f"    - {data['name']} ({symbol}): {self.output_counts[symbol]}")
+        # for symbol, data in parser.output_symbols.items():
+        #     if self.output_counts[symbol] > 0:
+        #         lines.append(f"    - {data['name']} ({symbol}): {self.output_counts[symbol]}")
+        
         return "\n".join(lines) + "\n"
 
 

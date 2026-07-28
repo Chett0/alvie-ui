@@ -34,7 +34,12 @@ function PaginatedHypothesis({
       defaultOpen={false}
     >
       {visibleRuns.map(({ steps, index: runIndex }) => (
-        <RunCard index={runIndex} defaultOpen={false} key={runIndex}>
+        <RunCard
+          index={runIndex}
+          stepCount={steps.length}
+          defaultOpen={false}
+          key={runIndex}
+        >
           <StepsTable steps={steps} />
         </RunCard>
       ))}

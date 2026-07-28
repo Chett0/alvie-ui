@@ -112,7 +112,7 @@ def validate_config_command(config_command: ConfigCommand) -> Command:
 
 
 def select_args(state: CommandState) -> StepOutput:
-    # TODO add the opporunity to going back on args selection
+    #TODO: add the opporunity to going back on args selection
     if not state.name:
         print("No command selected.")
         return StepOutput.back()
@@ -124,13 +124,52 @@ def select_args(state: CommandState) -> StepOutput:
 
     chosen_args : list[ConfigArg] = []
 
-    required_args : list[Argument] = [arg for arg in command.args if arg.required]
-    optional_args : list[Argument] = [arg for arg in command.args if not arg.required]
+    required_args : list[Argument] = [
+        arg for arg in command.args
+        if arg.required and not arg.prefilled
+    ]
+    prefilled_args : list[Argument] = [
+        arg for arg in command.args
+        if arg.required and arg.prefilled and arg.default is not None
+    ]
+    optional_args : list[Argument] = [
+        arg for arg in command.args
+        if not arg.required
+    ]
+
+    for arg in prefilled_args:
+        chosen_args.append(ConfigArg(flag=arg.flag, value=arg.default))
 
     for arg in required_args: 
         result = collect_arg(arg, chosen_args)
         if result is StepResult.BACK:
             return StepOutput.back()
+        
+    while prefilled_args:
+        choices = [
+            Choice(value=index, name=f"{arg.description}: {arg.default}")
+            for index, arg in enumerate(prefilled_args)
+        ]
+
+        arg = create_prompt(
+            ListPrompt,
+            message="Do you want to modify prefilled arguments?",
+            choices=choices + [DONE_CHOICE]
+        ).execute()
+
+        if arg is StepResult.BACK:
+            return StepOutput.back()
+
+        if is_done(arg):
+            break
+
+        argument = prefilled_args[arg]
+        result = collect_arg(argument, chosen_args)
+        if result is StepResult.BACK:
+            return StepOutput.back()
+
+        prefilled_args.remove(argument)
+        
     
     while optional_args:
         # I use index rather than the args because inquirerPy does a deep copy of choices
@@ -166,6 +205,9 @@ def collect_arg(arg: Argument, args: list[ConfigArg]) -> StepResult | None:
     value = arg.select_value()
     if value is StepResult.BACK:
         return StepResult.BACK
+
+    args[:] = [existing for existing in args if existing.flag != arg.flag]
+
     if isinstance(value, bool):
         if value:
             args.append(ConfigArg(flag=arg.flag))

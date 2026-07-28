@@ -17,6 +17,7 @@ from tui.validators import (
     DirectoryValidator, 
     HashValidator, 
     IntValidator, 
+    FloatValidator,
     ValuesValidator, 
     HexValidator
 )
@@ -31,6 +32,7 @@ class InputType(Enum):
     CHOICE = "choice"
     BOOLEAN = "boolean"
     INT = "int"
+    FLOAT = "float"
     HEX = "hex"
     HASH = "hash"
 
@@ -47,6 +49,7 @@ class Argument(BaseModel):
     values : list[str] | None = None
     default: str | None = None
     required: bool = False
+    prefilled: bool = False
 
     _validator: Validator | None = PrivateAttr(default=None)
 
@@ -71,6 +74,9 @@ class Argument(BaseModel):
 
             case InputType.INT:
                 self._validator = IntValidator()
+
+            case InputType.FLOAT:
+                self._validator = FloatValidator()
 
             case InputType.CHOICE:
                 if not self.values:
