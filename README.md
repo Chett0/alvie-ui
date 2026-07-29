@@ -289,32 +289,46 @@ Translated to ALVIE-CLI commands, this is equivalent to:
 
 ```bash
 python alvie-cli \
-  presets/examples/int/learn_fast_config_ef753b6_0_int.json \
-  presets/examples/int/learn_fast_config_ef753b6_1_int.json \
-  presets/examples/int/learn_fast_config_d54f031_0_int.json \
-  presets/examples/int/learn_fast_config_d54f031_1_int.json \
-  presets/examples/int/learn_fast_config_bf89c0b_0_int.json \
-  presets/examples/int/learn_fast_config_bf89c0b_1_int.json \
-  presets/examples/nint/learn_fast_config_ef753b6_0_nint.json \
+  presets/examples/learn/int/learn_fast_config_ef753b6_0_int.json \
+  presets/examples/learn/int/learn_fast_config_ef753b6_1_int.json \
+  presets/examples/learn/int/learn_fast_config_d54f031_0_int.json \
+  presets/examples/learn/int/learn_fast_config_d54f031_1_int.json \
+  presets/examples/learn/int/learn_fast_config_bf89c0b_0_int.json \
+  presets/examples/learn/int/learn_fast_config_bf89c0b_1_int.json \
   -i \
   -n fast_ef753b6_0_int fast_ef753b6_1_int fast_d54f031_0_int fast_d54f031_1_int fast_bf89c0b_0_int fast_bf89c0b_1_int \
-     fast_ef753b6_0_nint fast_ef753b6_1_nint fast_d54f031_0_nint fast_d54f031_1_nint fast_bf89c0b_0_nint fast_bf89c0b_1_nint \
   --njobs 6
 ```
 
 ```bash
 python alvie-cli \
-  presets/examples/nint/learn_fast_config_ef753b6_0_nint.json \
-  presets/examples/nint/learn_fast_config_ef753b6_1_nint.json \
-  presets/examples/nint/learn_fast_config_d54f031_0_nint.json \
-  presets/examples/nint/learn_fast_config_d54f031_1_nint.json \
-  presets/examples/nint/learn_fast_config_bf89c0b_0_nint.json \
-  presets/examples/nint/learn_fast_config_bf89c0b_1_nint.json \
+  presets/examples/learn/nint/learn_fast_config_ef753b6_0_nint.json \
+  presets/examples/learn/nint/learn_fast_config_ef753b6_1_nint.json \
+  presets/examples/learn/nint/learn_fast_config_d54f031_0_nint.json \
+  presets/examples/learn/nint/learn_fast_config_d54f031_1_nint.json \
+  presets/examples/learn/nint/learn_fast_config_bf89c0b_0_nint.json \
+  presets/examples/learn/nint/learn_fast_config_bf89c0b_1_nint.json \
   -i \
   -n fast_ef753b6_0_nint fast_ef753b6_1_nint fast_d54f031_0_nint fast_d54f031_1_nint fast_bf89c0b_0_nint fast_bf89c0b_1_nint \
   --njobs 6
 ```
 
+```bash
+/home/alvie/results/b6-sim/bf89c0b-b6-enclave-complete-0-0.01-0.01-int.dot
+/home/alvie/results/b6-sim/bf89c0b-b6-enclave-complete-0-0.01-0.01-nint.dot
+/home/alvie/results/b6-sim/bf89c0b-b6-enclave-complete-1-0.01-0.01-int.dot
+/home/alvie/results/b6-sim/bf89c0b-b6-enclave-complete-1-0.01-0.01-nint.dot
+
+/home/alvie/results/b6-sim/d54f031-b6-enclave-complete-0-0.01-0.01-int.dot
+/home/alvie/results/b6-sim/d54f031-b6-enclave-complete-0-0.01-0.01-nint.dot
+/home/alvie/results/b6-sim/d54f031-b6-enclave-complete-1-0.01-0.01-int.dot
+/home/alvie/results/b6-sim/d54f031-b6-enclave-complete-1-0.01-0.01-nint.dot
+
+/home/alvie/results/b6-sim/ef753b6-b6-enclave-complete-0-0.01-0.01-int.dot
+/home/alvie/results/b6-sim/ef753b6-b6-enclave-complete-1-0.01-0.01-int.dot
+/home/alvie/results/b6-sim/ef753b6-b6-enclave-complete-0-0.01-0.01-nint.dot
+/home/alvie/results/b6-sim/ef753b6-b6-enclave-complete-1-0.01-0.01-nint.dot
+```
 
 
 ### ALVIE-VIEWER

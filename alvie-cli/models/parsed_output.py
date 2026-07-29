@@ -149,6 +149,9 @@ class ParsedRun:
         steps = "".join(step.format() for step in self.steps)
         return f"Run {number}:\n{steps}"
     
+    # TODO: fix parsing a run like this: [IfZ.•] found in example fast_ef753b6_1_nint, hypothesis 9, run 14-15,
+    # Why a . inside square brackets? It should be used as run separator outside []
+    
     @classmethod
     def parse(
         cls, 

@@ -1,0 +1,30 @@
+{
+  "name": "Flow-analysis",
+  "executable": "bin/fa.exe",
+  "args": [
+    {
+      "flag": "--tmpdir",
+      "value": "/tmp/alvie"
+    },
+    {
+      "flag": "--m1-int",
+      "value": "/home/alvie/results/b6-sim/ef753b6-b6-enclave-complete-0-0.01-0.01-int.dot"
+    },
+    {
+      "flag": "--m2-int",
+      "value": "/home/alvie/results/b6-sim/ef753b6-b6-enclave-complete-1-0.01-0.01-int.dot"
+    },
+    {
+      "flag": "--m1-nint",
+      "value": "/home/alvie/results/b6-sim/ef753b6-b6-enclave-complete-0-0.01-0.01-nint.dot"
+    },
+    {
+      "flag": "--m2-nint",
+      "value": "/home/alvie/results/b6-sim/ef753b6-b6-enclave-complete-1-0.01-0.01-nint.dot"
+    },
+    {
+      "flag": "--witness-file-basename",
+      "value": "/tmp/alvie/witness"
+    }
+  ]
+}
