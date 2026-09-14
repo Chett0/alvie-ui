@@ -2,19 +2,18 @@
 
 User interface for [ALVIE](https://github.com/unive-alvie/alvie)
 
-<br>
 
-### What is ALVIE?
+## What is ALVIE?
 
 ALVIE is a research tool for the automated security analysis and vulnerability discovery in the Sancus embedded processor, created by the University of Venice.
 
-### Why ALVIE-UI?
+## Why ALVIE-UI?
 
 It provides a user-friendly interface (CLI and web) that simplifies the interaction with ALVIE, by offering interactive guided workflows, configuration management and output parsing.
 
 <br>
 
-#### Before
+### Before
 
 ```bash
 $ dune exec bin/learn.exe -- \
@@ -45,7 +44,7 @@ Use a previously saved configuration to run the same command without any user in
 
 <br>
 
-### Requirements
+## Requirements
 
 *ALVIE-UI* is fully containerized and supports both **x86_64 (amd64)** and **aarch64 (arm64)** architectures.
 
@@ -53,7 +52,7 @@ Ensure you have the following installed on your system:
 
 - **Docker**
 
-### Installation
+## Installation
 
 ```bash
 git clone https://github.com/Chett0/alvie-cli
@@ -93,9 +92,9 @@ make pull
 make
 ```
 
-### Usage
+## Usage
 
-#### Interactive mode
+### Interactive mode
 
 The default mode guides you through selecting a command, providing its arguments and (optionally) saving the resulting configuration.
 
@@ -110,7 +109,7 @@ You can run one of the following commands:
 
 <br>
 
-##### Example: learning a model 
+#### Example: learning a model 
 
 We want to run the **Learn.exe** command with the following specification:
 
@@ -187,7 +186,7 @@ For a complete list of available instructions and combinators, please refer to t
 
 <br>
 
-#### Non-interactive execution
+### Non-interactive execution
 
 When one or more configuration files are passed as arguments, the CLI skips the
 interactive mode and executes the corresponding commands directly. This is useful
@@ -258,7 +257,7 @@ Assuming the file above is saved as `presets/config.json`, run it with:
 python alvie-cli presets/config.json -r -o /path/to/output.txt -p /path/to/parsed.json
 ```
 
-##### Running multiple configurations
+#### Running multiple configurations
 
 You can pass several configuration files at once. By default they run
 sequentially, in the order they are listed on the command line:
@@ -331,6 +330,13 @@ python alvie-cli \
 ```
 
 
-### ALVIE-VIEWER
+## ALVIE-VIEWER
 
 Documentation at [ALVIE Viewer](./alvie-viewer)
+
+## License And Acknowledgements
+ALVIE-UI is released under the [MIT License](./LICENSE). The ALVIE project is supported by 
+[CCAT – Cybersecurity Competence and Training](https://ccat.fi.muni.cz/), 
+funded under Grant Agreement No. 101225878 and supported by the European Cybersecurity Competence Centre (ECCC).
+
+
